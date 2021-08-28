@@ -1,0 +1,13 @@
+
+        Function: foo
+            Body:
+                Do 
+                    a=a*.9 \.12;
+                    Do
+                        a=a+1;
+                    While (a<1)
+                    EndDo.
+                While (a<1)
+                EndDo.
+            EndBody.
+        

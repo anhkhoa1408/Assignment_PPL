@@ -1,0 +1,11 @@
+
+        Function: foo
+            Body:
+                Var:i=0,j=0;
+                If(i==j) Then
+                    While(2) Do
+                        i=j+1;
+                    EndWhile.
+                EndIf.
+            EndBody.
+        

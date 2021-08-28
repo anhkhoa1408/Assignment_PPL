@@ -1,0 +1,12 @@
+
+        Var: a,b,c;
+        Function: foo
+            Body:
+
+            EndBody.
+        Function: sum
+            Parameter: n;
+            Body:
+               
+            EndBody.
+        

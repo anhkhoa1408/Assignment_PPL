@@ -1,0 +1,7 @@
+
+        Var:x;
+        Function: 12main
+            Body:
+            
+            EndBody.
+        

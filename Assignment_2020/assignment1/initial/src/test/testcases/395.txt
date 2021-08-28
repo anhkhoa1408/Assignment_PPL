@@ -1,0 +1,15 @@
+
+        Function: sum
+            Parameter: n;
+            Body:
+                Var: i,s=0;
+                While (i>0) Do
+                    If (i%2 == 0) Then
+                        Continue;
+                    Else
+                        s=s+i;
+                        i=i+1;
+                    EndIf.
+                EndWhile.
+            EndBody.
+        

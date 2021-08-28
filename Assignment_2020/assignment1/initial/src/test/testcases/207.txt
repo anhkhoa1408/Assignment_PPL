@@ -1,0 +1,10 @@
+
+        Function: foo
+            Parameter: b,a[12],a[2][3][4];
+            Body:
+                Var: a = 5, b = 10;
+                d = "ancn";
+                e = 10e+12;
+                g = 0x123AF;
+            EndBody.
+        

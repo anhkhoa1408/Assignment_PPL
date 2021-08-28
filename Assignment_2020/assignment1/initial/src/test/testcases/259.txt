@@ -1,0 +1,7 @@
+
+        Function: sum
+            Parameter: n;
+            Body:
+                a = (2+3) * 100 ;
+            EndBody.
+        

@@ -1,0 +1,9 @@
+
+        Function: main
+            Body:
+            Var: result;
+            If (a > 12E-4) Then
+                Return result+a;
+            EndIf.
+            EndBody.
+        

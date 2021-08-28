@@ -1,0 +1,14 @@
+
+        Function: ucln
+            Parameter:a,m,m ;
+            Body:
+                If(m==n) Then
+                    Return m;
+                EndIf.
+                If(m>n) Then
+                    ucln(m - n, m);
+                Else
+                    ucln(n, n - m);
+                EndIf.
+            EndBody.
+        

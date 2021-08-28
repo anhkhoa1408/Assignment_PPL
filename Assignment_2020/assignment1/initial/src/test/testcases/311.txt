@@ -1,0 +1,13 @@
+
+        Function: foo
+            Parameter: a, b;
+            Body:
+                If a == 1 Then
+                a = foo(a) + 1;
+                ElseIf (a == 2) || (b == 3) Then
+                a = foo(a) + foo(2);
+                Else
+                a = a - 1;
+                EndIf.
+            EndBody.
+        

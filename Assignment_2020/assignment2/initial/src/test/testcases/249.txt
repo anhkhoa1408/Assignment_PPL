@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                Return 0xABCD1234;
+            EndBody.
+        

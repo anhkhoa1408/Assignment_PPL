@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                foo(a,x,s,a,f,31,34);
+            EndBody.
+        

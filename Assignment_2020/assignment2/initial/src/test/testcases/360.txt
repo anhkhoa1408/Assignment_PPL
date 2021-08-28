@@ -1,0 +1,10 @@
+
+        Var: a = "camc";
+        Function: a
+            Parameter: a;
+            Body:
+                If(a==a) Then
+                Return a;
+                EndIf.
+            EndBody.
+        

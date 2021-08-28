@@ -1,0 +1,14 @@
+
+        Function: foo
+            Parameter: a,b;
+            Body:
+                Var: x,y;
+                If (x==True) Then
+                    Do
+                        x=x+1;
+                        Break;
+                    While (x>y)
+                    EndDo.
+                EndIf.
+            EndBody.
+        

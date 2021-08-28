@@ -1,0 +1,13 @@
+
+        Function: foo
+            Body:
+                Do 
+                    a=12900 * 12 + 4e4;
+                    Do
+                        a=a+1;
+                    While (a<1)
+                    EndDo.
+                While (a<1)
+                EndDo.
+            EndBody.
+        

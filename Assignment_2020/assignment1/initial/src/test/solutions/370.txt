@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(ucln)[VarDecl(Id(a)),VarDecl(Id(m)),VarDecl(Id(m))],([][If(BinaryOp(==,Id(m),Id(n)),[],[Return(Id(m))])Else([],[]),If(BinaryOp(>,Id(m),Id(n)),[],[CallStmt(Id(ucln),[BinaryOp(-,Id(m),Id(n)),Id(m)])])Else([],[CallStmt(Id(ucln),[Id(n),BinaryOp(-,Id(n),Id(m))])])]))])

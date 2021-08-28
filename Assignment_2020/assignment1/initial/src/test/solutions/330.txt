@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[VarDecl(Id(a),[10])],([VarDecl(Id(i)),VarDecl(Id(j))][For(Id(i),IntLiteral(0),BinaryOp(<=,Id(i),IntLiteral(9)),FloatLiteral(1.5),[],[While(BinaryOp(>,Id(j),IntLiteral(10)),[],[CallStmt(Id(foo),[IntLiteral(2)])])])]))])

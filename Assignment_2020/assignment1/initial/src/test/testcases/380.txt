@@ -1,0 +1,16 @@
+
+        Function: foo
+            Parameter: a;
+            Body:
+                Var: a = False;
+                If a == False Then
+                a = a + 1;
+                ElseIf a == True Then
+                a = a - 1;
+                ElseIf a!=0 Then
+                a = 0;
+                Else
+                a = a * a
+                EndIf.
+            EndBody.
+        

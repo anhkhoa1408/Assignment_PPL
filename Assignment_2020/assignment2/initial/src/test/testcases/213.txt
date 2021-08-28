@@ -1,0 +1,16 @@
+
+        Function: foo
+            Body:
+                Var: i = 0;
+                While (i<1) Do
+                    While i == True Do
+                        While i + 10 >= 25 Do
+                            While 3*i == False Do
+                                While 10*i - 27*i > 90 Do
+                                EndWhile.
+                            EndWhile.
+                        EndWhile.
+                    EndWhile.
+                EndWhile.
+            EndBody.
+        

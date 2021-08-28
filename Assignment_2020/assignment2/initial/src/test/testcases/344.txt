@@ -1,0 +1,14 @@
+
+        Function: foo
+            Body:
+                Return foo()[4];
+            EndBody.
+        Function: foo1
+            Body:
+                Return foo1()[5];
+            EndBody.
+        Function: foo2
+            Body:
+                Return foo2()[6];
+            EndBody.
+        

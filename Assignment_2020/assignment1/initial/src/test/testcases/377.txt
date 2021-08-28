@@ -1,0 +1,8 @@
+
+        Function: foo
+            Parameter: b,a[12],a[2][3][4];
+            Body:
+                Var: a = 5, b = 10;
+                c = 10. +. 25 * 40 \ 3 && 15;
+            EndBody.
+        

@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                Return foo()[4];
+            EndBody.
+        

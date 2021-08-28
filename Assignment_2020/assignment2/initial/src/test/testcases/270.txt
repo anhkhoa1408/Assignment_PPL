@@ -1,0 +1,7 @@
+
+        Var:a,b,c;
+        Function: main
+            Body:
+                Return foo(x*y+z,2,True);
+            EndBody.
+        

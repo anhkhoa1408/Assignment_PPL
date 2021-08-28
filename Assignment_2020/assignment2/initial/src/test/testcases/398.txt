@@ -1,0 +1,11 @@
+
+        Var: a,b,c,d,w,e,f,a[2][3][4][5][6];
+        Function: foo
+            Parameter: a[10];
+            Body:
+                Var:i,j;
+                For(i=12,i<1000,12) Do
+                    Continue;
+                EndFor.
+            EndBody.
+        

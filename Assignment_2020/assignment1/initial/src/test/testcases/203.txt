@@ -1,0 +1,7 @@
+
+        Var: b,a[3],c[123][22],e=5,r=6,a;
+        Function: main
+            Body:
+                foo(3*5);
+            EndBody.
+        

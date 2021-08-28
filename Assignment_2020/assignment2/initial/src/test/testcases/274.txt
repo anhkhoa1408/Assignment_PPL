@@ -1,0 +1,6 @@
+
+        Var:x=2,a[2][3]={"x,t,z",12,2,3," ",12};
+        Function: main
+        Body:
+        EndBody.
+        

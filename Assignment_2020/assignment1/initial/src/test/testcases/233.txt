@@ -1,0 +1,12 @@
+
+        Function: foo
+            Parameter: a,b;
+            Body:
+                Var: i;
+                For (i=0,i<5,2) Do
+                    If(i % 2 == 0) Then
+                    i = i * i;
+                    EndIf.
+                EndFor.
+            EndBody.
+        

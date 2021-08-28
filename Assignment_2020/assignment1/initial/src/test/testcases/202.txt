@@ -1,0 +1,7 @@
+
+        Var: z,a=5,b,c,s,esa;
+        Function: main
+            Body:
+                foo(a,b,c);
+            EndBody.
+        

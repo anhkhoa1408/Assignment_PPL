@@ -1,0 +1,7 @@
+
+        Function: foo
+            Body:
+                Var:i;
+                    Return 5*fooi);
+            EndBody.
+        

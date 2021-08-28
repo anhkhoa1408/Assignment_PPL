@@ -1,0 +1,10 @@
+
+        Function: sum
+            Parameter: n;
+            Body:
+                Var: i,s=0;
+                For(i=0,i<n,1) Do
+                s = s + i;
+                EndFor.
+            EndBody.
+        

@@ -1,0 +1,8 @@
+
+        Function: foo
+        Body:
+            For(i=0,i>5,100) Do
+            i = i*i;
+            EndFor.
+        EndBody.
+        

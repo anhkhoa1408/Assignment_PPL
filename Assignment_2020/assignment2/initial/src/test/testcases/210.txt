@@ -1,0 +1,13 @@
+
+        Function: foo
+            Parameter: a, b;
+            Body:
+                If a >= 1 Then
+                a = 15 + 1 - 20 *. 9;
+                ElseIf (a <= 2) || (b == 3) || (c == 5) Then
+                a = b + 2;
+                Else
+                a = c - 1;
+                EndIf.
+            EndBody.
+        

@@ -1,0 +1,16 @@
+
+        Function: foo
+            Parameter: a;
+            Body:
+                Var: a = False;
+                If a == False Then
+                a = a + 1;
+                ElseIf a == True Then
+                a = a - 1;
+                ElseIf a!=0 Then
+                a = 0;
+                ElseIf a==a*9+19\2 Then
+                a = foo(3,4,5,6);
+                EndIf.
+            EndBody.
+        

@@ -1,0 +1,10 @@
+
+        Function: foo
+            Parameter: a,b,c;
+            Body:
+                Do a=a+11;
+                While (a<1)
+                    Return foo(3*a);
+                EndDo.
+            EndBody.
+        

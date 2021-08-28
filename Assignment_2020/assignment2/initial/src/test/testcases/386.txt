@@ -1,0 +1,9 @@
+
+        Function: foo
+            Body:
+                While i == 1 Do
+                    i = i + 1;
+                    i=i;
+                EndWhile.
+            EndBody.
+        

@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                Return 12E+12;
+            EndBody.
+        

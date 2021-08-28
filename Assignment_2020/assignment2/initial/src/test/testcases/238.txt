@@ -1,0 +1,10 @@
+
+        Function: foo
+            Parameter: a[10];
+            Body:
+                Var:i,j;
+                For(i=12,i<1000,12) Do
+                    Continue;
+                EndFor.
+            EndBody.
+        

@@ -1,0 +1,9 @@
+
+        Function: foo
+            Parameter: a,b;
+            Body:
+                Var: i;
+                For (i=0,i<5,2) Do
+                EndFor.
+            EndBody.
+        

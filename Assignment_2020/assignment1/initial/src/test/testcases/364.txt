@@ -1,0 +1,10 @@
+
+        Function: fooo
+            Parameter: n;
+            Body:
+                While (a == n) Do
+                    Break;
+                    Continue;
+                EndWhile.
+            EndBody.
+        

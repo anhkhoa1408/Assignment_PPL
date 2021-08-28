@@ -1,0 +1,11 @@
+
+        Function: foo
+        Body:
+            Return x*x*x+2;
+        EndBody.
+        Function: sum
+            Parameter: n;
+            Body:
+                foo(x) ;
+            EndBody.
+        

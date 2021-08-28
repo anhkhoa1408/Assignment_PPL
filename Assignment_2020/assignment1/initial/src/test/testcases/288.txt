@@ -1,0 +1,10 @@
+
+       Function: foo
+            Body:
+               
+                While ((i=1) && (a>2)) Do
+                    i = a + 1;
+                    b=i;
+                EndWhile.
+            EndBody.
+        

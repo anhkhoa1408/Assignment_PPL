@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+            Var: a[2][3] = {{1E+9,22.0,33.0},{4.123,0.5,.6}}
+            EndBody.
+        

@@ -1,0 +1,1 @@
+Program([VarDecl(Id(a),StringLiteral(camc)),FuncDecl(Id(a)[VarDecl(Id(a))],([][If(BinaryOp(==,Id(a),Id(a)),[],[Return(Id(a))])Else([],[])]))])

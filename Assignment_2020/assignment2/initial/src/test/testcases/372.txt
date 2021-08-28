@@ -1,0 +1,8 @@
+
+        Var:a,b,c,a;
+        Function: main
+            Body:
+            a[b[2] + foo(a,b,c)] = 2*9+2-9.0;
+            c[d[e[f]]] = 4;
+            EndBody.
+        

@@ -1,0 +1,14 @@
+
+        Function: foo
+            Body:
+                Do 
+                    foo(a,2+3);
+                    Do
+                        a=a+1;
+                        Return a;
+                    While (a<1)
+                    EndDo.
+                While (a<1)
+                EndDo.
+            EndBody.
+        

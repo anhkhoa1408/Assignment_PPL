@@ -1,0 +1,8 @@
+
+        Var:x;
+        Function: main
+            If(x == 0 || x > 3) Then
+                Return x
+            EndIf.
+            EndBody
+        

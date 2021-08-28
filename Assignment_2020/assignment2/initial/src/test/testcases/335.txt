@@ -1,0 +1,11 @@
+
+        Function: foo
+            Parameter: a,b,c;
+            Body:
+                Var: a,b,c;
+                a= b*b;
+                b= c*c;
+                c= a*a;
+                Return foo(2+a,3*b,4*c);
+            EndBody.
+        

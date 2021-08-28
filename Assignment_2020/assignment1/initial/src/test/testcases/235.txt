@@ -1,0 +1,13 @@
+
+        Function: maxNum
+            Parameter: a[10];
+            Body:
+                Var:i;
+                max=a[0];
+                For (i=0,i<=9,1) Do
+                    If (max > a[i]) Then
+                    max = a[i];
+                    EndIf.
+                EndFor.
+            EndBody.
+        

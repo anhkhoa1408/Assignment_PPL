@@ -1,0 +1,12 @@
+
+        Var: a,b,c;
+        Function: foo
+            Body:
+
+            EndBody.
+        Function: sum
+            Parameter: n;
+            Body:
+            a[3+foo(2)] = a[b[2][3]];
+            EndBody.
+        

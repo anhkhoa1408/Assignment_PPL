@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],([][Dowhile([],[Assign(Id(a),BinaryOp(\.,BinaryOp(*.,Id(a),IntLiteral(9)),IntLiteral(12))),Dowhile([],[Assign(ArrayCell(Id(a),[IntLiteral(2)]),IntLiteral(12))],BinaryOp(<,Id(a),IntLiteral(1)))],BinaryOp(<,Id(a),IntLiteral(1)))]))])

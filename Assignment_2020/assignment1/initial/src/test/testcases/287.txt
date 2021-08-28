@@ -1,0 +1,14 @@
+
+       Function: foo
+            Body:
+                Var: i = 0,a,b;
+                a = 15 * 9 +29;
+                While ((i<1) && (a>2) && acb+a<i+12) Do
+                    If (a>100) Then
+                        a  15 * a +5;
+                    EndIf.
+                    i = a + 1;
+                    b=i;
+                EndWhile.
+            EndBody.
+        

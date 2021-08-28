@@ -1,0 +1,9 @@
+
+        Function: foo
+            Body:
+                Var:i,j;
+                For (i=0,i<=9122,23) Do
+                Break;
+                EndFor
+            EndBody.
+        

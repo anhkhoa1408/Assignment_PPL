@@ -1,0 +1,6 @@
+
+        Var: a,b,c;
+        Function: foo
+            Body:
+        EndBody.
+        

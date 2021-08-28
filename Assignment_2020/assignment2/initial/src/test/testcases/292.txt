@@ -1,0 +1,9 @@
+
+        Function: foo
+            Body:
+                Var:i;
+                For(i="x",i<1000,12) Do
+                    Return 5*foo(i);
+                EndFor.
+            EndBody.
+        

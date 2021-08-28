@@ -1,0 +1,11 @@
+
+        Function: foo
+            Parameter: a;
+            Body:
+                If a == 1 Then
+                a = a + 1;
+                Else
+                a = a - 1;
+                EndIf.
+            EndBody.
+        

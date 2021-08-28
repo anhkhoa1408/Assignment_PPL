@@ -1,0 +1,13 @@
+
+        Function: main
+            Body:
+            Var:a,b,c;
+            If (a>b) && (a>c) Then
+                Return a;
+            ElseIf (b>a) && (b>c) Then
+                Return b;
+            Else
+                Return c;
+            EndIf.
+            EndBody.
+        

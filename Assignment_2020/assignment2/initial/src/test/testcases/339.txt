@@ -1,0 +1,6 @@
+
+        Function: foo
+            Body:
+                Return 1+2*6*foo(3,4,5,6);
+            EndBody.
+        

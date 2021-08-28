@@ -1,0 +1,11 @@
+
+        Function: foo
+            Body:
+                Var:i,j;
+                For (i=0,i<=9122,23) Do
+                   While(j>10) Do
+                    foo(2+x);
+                   EndWhile.
+                EndFor.
+            EndBody.
+        

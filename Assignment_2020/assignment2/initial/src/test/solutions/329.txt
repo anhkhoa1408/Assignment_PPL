@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(maxNum)[VarDecl(Id(a),[10])],([VarDecl(Id(i))][Assign(Id(max),ArrayCell(Id(a),[IntLiteral(0)])),For(Id(i),IntLiteral(0),BinaryOp(<=,Id(i),IntLiteral(9)),IntLiteral(1),[],[If(BinaryOp(>,Id(max),ArrayCell(Id(a),[Id(i)])),[],[Assign(Id(max),ArrayCell(Id(a),[Id(i)]))])Else([],[])])]))])

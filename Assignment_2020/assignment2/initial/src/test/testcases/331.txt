@@ -1,0 +1,15 @@
+
+        Function: foo
+            Parameter: a[10];
+            Body:
+                Var:i,j;
+                For (i=0,i<=9,1.5) Do
+                   While(j>10) Do
+                        foo(2);
+                        While(k<15) Do
+                        foo(3+i);
+                        EndWhile.
+                   EndWhile.
+                EndFor.
+            EndBody.
+        

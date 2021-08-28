@@ -1,0 +1,6 @@
+
+        Var: w = "a",c =0o12,d = 12.46;
+        Function: foo
+            Body:
+        EndBody.
+        

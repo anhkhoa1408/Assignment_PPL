@@ -1,0 +1,11 @@
+
+        Function: foo
+            Body:
+                Var: i = 0,a,b;
+                While ((i<1) && (a>2) && b+a<i+12) Do
+                a = 15*a +5;
+                i = a + 1;
+                b=i;
+                EndWhile.
+            EndBody.
+        

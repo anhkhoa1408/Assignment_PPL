@@ -1,0 +1,9 @@
+
+        Var:x;
+        Function: foo1
+            Parameter:x,a,b,c,y[5];
+            Body:
+                Break;
+                Return;
+            EndBody.
+        

@@ -1,0 +1,8 @@
+
+        Function: foo
+            Body:
+                Var: a,b,c;
+                a = 0xABCD;
+                Return a;
+            EndBody.
+        

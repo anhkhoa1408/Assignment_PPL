@@ -1,0 +1,10 @@
+
+        Function: foo
+            Body:
+                Do 
+                    a=a+11;
+                    
+                While (a<1)
+                EndDo.
+            EndBody.
+        

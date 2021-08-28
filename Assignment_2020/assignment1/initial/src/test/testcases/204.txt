@@ -1,0 +1,7 @@
+
+        Var: a[3]={12,3,0} , c[1][1] = {{"abc","ab"},{"xt","z"}}, e = 5 , r = 6, a;
+        Function: main
+            Body:
+
+            EndBody.
+        
