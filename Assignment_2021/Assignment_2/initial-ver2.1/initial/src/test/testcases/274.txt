@@ -1,0 +1,6 @@
+
+        class program {
+            final int b = a[x] + 12 - 4 * 5 / 23 ^ "c" || x;
+
+        }
+        

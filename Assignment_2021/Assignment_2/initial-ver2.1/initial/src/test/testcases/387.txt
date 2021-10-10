@@ -1,0 +1,10 @@
+
+        class program {
+            static int a = 0;
+            boolean[10000] a, b;
+            bool a = true;
+            static void foo() {
+                return a.foo(a, b, c, d && 2);
+            }
+        }
+        

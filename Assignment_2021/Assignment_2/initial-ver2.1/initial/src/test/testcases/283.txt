@@ -1,0 +1,7 @@
+
+        class program {
+            void foo(int a) {
+                return b.foo(b) * a.foo(c) * c.foo(a-2) + x.foo(10);
+            }
+        }
+        

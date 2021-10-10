@@ -1,0 +1,21 @@
+
+        class a extends b {
+            program(int a, b, c; string d; boolean e) {
+                    a := 0;
+                    b := 0;
+                    for a := 5 to 10 do 
+                        for b := 15 downto 1 do
+                            for c := 0 downto -10 do
+                                if c == 0 then
+                                    c := c + 3;
+                                else
+                                    if d == "" then
+                                        if e == false then
+                                            d := d ^ "abc";
+                                        else
+                                            for i := 1 downto 0 do
+                                                c[a[b + i[2]]] := 5;
+                                    
+            }
+        }
+        

@@ -1,0 +1,8 @@
+
+        class program {
+            program() {
+                a[b[2] + c] := 0;
+                c[2 * this.foo(3) + x.g(2)] := 0;
+            }
+        }
+        

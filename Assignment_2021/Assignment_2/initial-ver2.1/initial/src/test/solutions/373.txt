@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(program),[AttributeDecl(Instance,VarDecl(Id(a),ClassType(Id(program)),FieldAccess(Self(),Id(a))))])])

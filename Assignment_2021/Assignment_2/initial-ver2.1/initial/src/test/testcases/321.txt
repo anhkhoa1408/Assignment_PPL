@@ -1,0 +1,10 @@
+
+        class program {
+            int a = 0;
+            int b = nil;
+            float c = 0;
+            int func(int a, b; float c) {
+                a := b + c * this.c;
+            }
+        }
+        

@@ -1,0 +1,7 @@
+
+        class program {
+            static void foo() {
+                return this.a[2];
+            }
+        } 
+        

@@ -1,0 +1,32 @@
+
+        class program {
+            static final int a = 0;
+            float b = 0;
+            static int funcA(int a,b,c) {
+                return a*b+c;
+            }
+            static int funcB() {
+                a[3+x.foo(2)] := a[b] * 2;
+            }
+            string func() {
+                this.a := 5;
+                this.a[0] := 1;
+            }
+        }
+        
+        class program2 {
+            static final int a = 0;
+            program a = new program();
+            int funcA() {
+                c := 5 * d - e + f /2000;
+            }
+        }
+        
+        class program3 {
+            static final int a = 0;
+            program a = new program();
+            int funcA() {
+                c := 5 * d - e + f /2000;
+            }
+        }
+        

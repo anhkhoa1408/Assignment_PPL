@@ -1,0 +1,14 @@
+
+        clas program {
+            static int a = 0;
+            boolean[10000] a, b;
+            bool a = true;
+            string func(int a, b, float c) {
+                for a = 5 to 10 do 
+                    for b = 5 to 10 do 
+                        for b = 5 to 10 do 
+                            for c = 15 downto 10 do 
+                                break;
+            }
+        }
+        

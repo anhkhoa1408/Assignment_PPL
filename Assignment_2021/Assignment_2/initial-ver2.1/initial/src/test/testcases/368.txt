@@ -1,0 +1,7 @@
+
+        class program {
+            void program(int a, b, c; string d; boolean e) {
+                return a && "c" || d != e;
+            }
+        }
+        

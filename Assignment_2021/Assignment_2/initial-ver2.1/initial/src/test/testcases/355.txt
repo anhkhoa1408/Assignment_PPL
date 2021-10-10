@@ -1,0 +1,21 @@
+
+        class program {
+            program(int a, b, c; string d; boolean e) {
+                a := 0;
+                b := 0;
+                for a := 5 to 10 do 
+                    break;
+            }
+        }
+
+        class program1 extends program {
+            program1(int a, b, c; string d; boolean e) {
+                a := 0;
+                b := 0;
+                for a := 5 to 10 do 
+                    break;
+                for a := 0 downto -14 do
+                    break;
+            }
+        }
+        

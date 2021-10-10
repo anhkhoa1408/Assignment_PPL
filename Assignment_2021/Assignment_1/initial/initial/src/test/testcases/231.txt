@@ -1,0 +1,9 @@
+
+        class program {
+            int func(int a,b) {
+                if a == 0 then
+                    b := b + 1;
+                
+            } 
+        }
+        

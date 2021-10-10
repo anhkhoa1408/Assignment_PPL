@@ -1,0 +1,1 @@
+boolean;1,class;3,boolean;1,class;3,to;23,downto;24,this;20,final;21,static;22,false;17,void;18,nil;19,string;12,int;10,float;8,<EOF>

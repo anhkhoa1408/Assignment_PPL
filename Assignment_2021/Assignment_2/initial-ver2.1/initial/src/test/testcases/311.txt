@@ -1,0 +1,8 @@
+
+            class program {
+                static final int a = 0;
+                float b = 0;
+                int func() {
+                }
+            }
+            

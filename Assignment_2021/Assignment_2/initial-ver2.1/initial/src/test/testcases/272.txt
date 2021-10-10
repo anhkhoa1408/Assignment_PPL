@@ -1,0 +1,9 @@
+
+        class program {
+            int[2] a = {5, 5};
+            string[2] b = {"", " "};
+            float[2] a = {5E10, 22E9, 5.5};
+
+
+        }
+        

@@ -1,0 +1,7 @@
+
+        class program {
+            foo() {
+                b.a := 5;
+            }
+        }
+        

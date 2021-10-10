@@ -1,0 +1,6 @@
+class program {
+                int a;
+                float b;
+                string e = "abcdef", b, c, d = "";
+                # string c = "abcdef", d = "", e = """;
+            }

@@ -1,0 +1,5 @@
+
+        class program {
+            boolean[2] b = {true, false};
+        }
+        

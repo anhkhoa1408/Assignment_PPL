@@ -1,0 +1,9 @@
+class program {
+                float b, c ,d ,e ,f = 5.0, g = 12E-10;
+                string e = "abcdef", b, c, d = "";
+                int[5] b = {123,45};
+                float[2] d = {123, "'", 12345, "12", 0};
+                string[12] stringA = {"12", "0012321", 12E-5, 20e+8};
+                /* This is a comment string[45] abd */
+                # string c = "abcdef", d = "", e = """;
+            }

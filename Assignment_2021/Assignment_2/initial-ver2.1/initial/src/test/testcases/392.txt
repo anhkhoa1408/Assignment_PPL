@@ -1,0 +1,20 @@
+
+        class program {
+            static int a = 0;
+            boolean[10000] a, b;
+            bool a = true;
+            string func(int a, b; float c) {
+                string e;
+                final float[1] arr;
+                float f;
+                arr[2 + this.foo(2)] := 0;
+                e := "avc" ^ "jlacsjl";
+                f := 12E10 - 20.0003;
+                return 0;
+            }
+
+            static boolean foo() {
+                return a.foo() % b.foo();
+            }
+        }
+        

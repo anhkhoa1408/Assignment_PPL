@@ -1,0 +1,8 @@
+
+        class program {
+            program() {
+                a := a != 0 && b;
+                break;
+            }
+        }
+        

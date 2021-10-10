@@ -1,0 +1,8 @@
+
+            class program {
+                int a;
+                int foo(int a) {
+                    final Shape a = new Shape(3,4);
+                }
+            }
+        

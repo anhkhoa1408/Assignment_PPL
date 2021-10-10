@@ -1,0 +1,1 @@
+Program([ClassDecl(Id(program),[AttributeDecl(Instance,VarDecl(Id(a),IntType)),AttributeDecl(Instance,VarDecl(Id(b),FloatType)),AttributeDecl(Instance,VarDecl(Id(e),StringType,StringLit("abcdef"))),AttributeDecl(Instance,VarDecl(Id(b),StringType)),AttributeDecl(Instance,VarDecl(Id(c),StringType)),AttributeDecl(Instance,VarDecl(Id(d),StringType,StringLit("")))])])

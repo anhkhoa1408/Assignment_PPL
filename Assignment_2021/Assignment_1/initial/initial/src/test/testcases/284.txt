@@ -1,0 +1,6 @@
+
+        class program {
+            static int a = 0;
+            boolean[10000 a, b;
+        }
+        

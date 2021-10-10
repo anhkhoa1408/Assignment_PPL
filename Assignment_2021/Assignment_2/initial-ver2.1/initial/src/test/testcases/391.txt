@@ -1,0 +1,13 @@
+
+        class program {
+            static int a = 0;
+            boolean[10000] a, b;
+            bool a = true;
+            string func(int a, b; float c) {
+                return 0;
+            }
+        }
+        class program2 extends program {
+            program a = new program(a, b, c);
+        }
+        

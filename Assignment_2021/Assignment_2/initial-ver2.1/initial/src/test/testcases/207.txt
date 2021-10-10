@@ -1,0 +1,7 @@
+class program {
+                float b, c ,d ,e ,f = 5.0, g = 12E-10;
+                string e = "abcdef", b, c, d = "";
+                int[5] b = {123,45};
+                float[2] d = {123, "'", 12345, "12", 0};
+                # string c = "abcdef", d = "", e = """;
+            }

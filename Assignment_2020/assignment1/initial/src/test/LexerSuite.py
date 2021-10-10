@@ -82,6 +82,7 @@ class LexerSuite(unittest.TestCase):
     def test_literal_5(self):
         self.assertTrue(TestLexer.checkLexeme("0.11e849 0.33e-12 0.E+0 0.E-00 10e+425 -0.E+991299","0.11e849,0.33e-12,0.E+0,0.E-00,10e+425,-0.E+991299,<EOF>",125))
 
+    # Test string literal
     def test_string_literal_1(self):
          self.assertTrue(TestLexer.checkLexeme("""\"abc def\"""" ,"abc def,<EOF>",126))
 
