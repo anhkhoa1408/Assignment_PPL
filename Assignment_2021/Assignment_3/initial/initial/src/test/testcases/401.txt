@@ -1,0 +1,24 @@
+
+        class a {
+            int c;
+            final int a = 1;
+            b b = new b();
+            int foo() {
+                b.foo();
+            }
+        }
+
+        class b {
+            b() {
+
+            }
+            void foo() {
+
+            }
+        }
+
+        class c {
+
+        }
+
+        
