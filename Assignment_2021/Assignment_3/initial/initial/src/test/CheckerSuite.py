@@ -7,26 +7,11 @@ class CheckerSuite(unittest.TestCase):
         """Simple program: int main() {} """
         input = """
         class a {
-            int c;
-            final int a = 1;
-            b b = new b();
-            int foo() {
-                b.foo();
-            }
+            int a = 0;
+            int b = this.a;
         }
 
-        class b {
-            b() {
-
-            }
-            void foo() {
-
-            }
-        }
-
-        class c {
-
-        }
+        
 
         """
         expect = "Undeclared Function: foo"

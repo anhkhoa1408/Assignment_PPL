@@ -8,13 +8,15 @@ from StaticError import *
 
 
 class MType:
-    def __init__(self, partype, rettype):
+    def __init__(self, partype, rettype, listName = None):
         self.partype = partype
         self.rettype = rettype
+        self.listName = listName
+
 
 
 class Symbol:
-    def __init__(self, name, mtype, store, value=None):
+    def __init__(self, name, mtype, store, value = None):
         self.name = name
         self.mtype = mtype
         self.store = store
@@ -302,14 +304,19 @@ class StaticChecker(BaseVisitor):
         init = self.visit(ast.value, c) if ast.value else None
         storeType = type(ast)
 
+        # print(init.rettype, typ)
+
         if init is None:
             raise IllegalConstantExpression(ast.value)
 
         if not type(init.rettype) is type(typ):
             raise TypeMismatchInConstant(ast)
-
+        
         if init.partype is VarDecl:
             raise IllegalConstantExpression(ast.value)
+        elif init.partype is ConstDecl:
+            if ast.constant.name in init.listName:
+                raise IllegalConstantExpression(ast.value)
 
         return Symbol(name, typ, storeType, init)
 
@@ -319,11 +326,9 @@ class StaticChecker(BaseVisitor):
         env['class'] = [] + c['current']['listmem']
         env['param'] = []
 
-        for x in ast.param:
-            ele = self.visit(x, env['param'])
-            if ele.name in list(map(lambda x: x.name, env['param'])):
-                raise Redeclared(Parameter(), str(ele.name.name))
-            env['param'].append(ele)
+        for ele in env['class']:
+            if ele['decl'].name == ast.name:
+                env['param'] = ele['decl'].mtype.partype
 
         self.visit(ast.body, env)
 
@@ -440,19 +445,19 @@ class StaticChecker(BaseVisitor):
         if 'decl' in c and c['decl'] != []:
             for ele in c['decl']:
                 if ast.name == ele.name.name:
-                    return MType(ele.store, ele.mtype)
+                    return MType(ele.store, ele.mtype, ast.name)
         if 'param' in c and c['param'] != []:
             for ele in c['param']:
                 if ast.name == ele.name.name:
-                    return MType(ele.store, ele.mtype)
+                    return MType(ele.store, ele.mtype, ast.name)
         if 'class' in c and c['class'] != []:
             for ele in c['class']:
                 if ast.name == ele['decl'].name.name:
-                    return MType(ele['decl'].store, ele['decl'].mtype)
+                    return MType(ele['decl'].store, ele['decl'].mtype, ast.name)
         if 'global' in c and c['global'] != []:
             for ele in c['global']:
                 if ast.name == ele['decl'].name.name:
-                    return MType(ele['decl'].store, ele['decl'].mtype)
+                    return MType(ele['decl'].store, ele['decl'].mtype, ast.name)
         raise Undeclared(Identifier(), ast.name)
 
     def visitBinaryOp(self, ast, c):
@@ -460,45 +465,47 @@ class StaticChecker(BaseVisitor):
         left = self.visit(ast.left, c)
         right = self.visit(ast.right, c)
         typ = left.partype if left.partype is VarDecl else right.partype
+        print(left.rettype, right.rettype)
 
         if op in ['+', '-', '*', '/']:
             if type(left.rettype) in [IntType, FloatType] and type(right.rettype) in [IntType, FloatType]:
                 if type(left.rettype) is FloatType or type(right.rettype) is FloatType:
-                    return MType(typ, FloatType())
-                return MType(typ, IntType())
+                    return MType(typ, FloatType(), [left.name, right.name])
+                return MType(typ, IntType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
         elif op in ['\\', '%']:
             if type(left.rettype) is IntType and type(right.rettype) is IntType:
-                return MType(typ, IntType())
+                return MType(typ, IntType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
         elif op in ['==', '!=']:
             if type(left.rettype) in [IntType, BoolType] and type(right.rettype) in [IntType, BoolType]:
                 if type(left.rettype) == type(right.rettype):
-                    return MType(typ, BoolType())
+                    return MType(typ, BoolType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
         elif op in ['>', '>=', '<', '<=']:
             if type(left.rettype) in [IntType, FloatType] and type(right.rettype) in [IntType, FloatType]:
-                return MType(typ, BoolType())
+                return MType(typ, BoolType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
         elif op in ['&&', '||']:
             if type(left.rettype) is BoolType and type(right.rettype) is BoolType:
-                return MType(typ, BoolType())
+                return MType(typ, BoolType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
         elif op == '^':
             if type(left.rettype) is StringType and type(right.rettype) is StringType:
-                return MType(typ, StringType())
+                return MType(typ, StringType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
 
     def visitUnaryOp(self, ast, c):
         op = ast.op
-        body = type(self.visit(ast.body, c))
+        body = self.visit(ast.body, c)
+        print(body.rettype)
         if op in ['+', '-']:
-            if body in [IntType, FloatType]:
-                return body
+            if type(body.rettype) in [IntType, FloatType]:
+                return MType(body.partype, body.rettype, [body.listName])
             raise TypeMismatchInExpression(ast)
         elif op == '!':
-            if body is BoolType:
-                return body
+            if type(body.rettype) is BoolType:
+                return MType(body.partype, body.rettype, [body.listName])
             raise TypeMismatchInExpression(ast)
 
     def visitCallExpr(self, ast, c):
@@ -573,6 +580,7 @@ class StaticChecker(BaseVisitor):
         return MType(None, ClassType(ast.classname))
 
     def visitFieldAccess(self, ast, c):
+        # print(c[])
         obj = None
         if type(ast.obj) is Id:
             if 'decl' in c and c['decl'] != []:
@@ -694,7 +702,7 @@ class StaticChecker(BaseVisitor):
     def visitFloatLiteral(self, ast, c):
         return MType(None, FloatType())
 
-    def visitBoolLiteral(self, ast, c):
+    def visitBooleanLiteral(self, ast, c):
         return MType(None, BoolType())
 
     def visitStringLiteral(self, ast, c):
@@ -702,6 +710,9 @@ class StaticChecker(BaseVisitor):
 
     def visitNullLiteral(self, ast, c):
         return MType(None, NullLiteral())
+
+    def visitSelfLiteral(self, ast, c):
+        return MType(None, SelfLiteral())
 
     def visitStatic(self, ast, param):
         return Static()
