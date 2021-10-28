@@ -293,7 +293,10 @@ class StaticChecker(BaseVisitor):
         typ = self.visit(ast.varType, c)
         init = self.visit(ast.varInit, c) if ast.varInit else None
 
-        if init and not type(init.rettype) is type(typ):
+        if type(typ) is FloatType:
+            if init and not type(init.rettype) in [IntType, FloatType]:
+                raise TypeMismatchInExpression(ast.varInit)
+        elif init and not type(init.rettype) is type(typ):
             raise TypeMismatchInExpression(ast.varInit)
 
         return Symbol(name, typ, storeType, init)
@@ -304,16 +307,18 @@ class StaticChecker(BaseVisitor):
         init = self.visit(ast.value, c) if ast.value else None
         storeType = type(ast)
 
-        # print(init.rettype, typ)
-
         if init is None:
             raise IllegalConstantExpression(ast.value)
 
-        if not type(init.rettype) is type(typ):
+        if type(typ) is FloatType:
+            if not type(init.rettype) in [IntType, FloatType]:
+                raise TypeMismatchInExpression(ast.value)
+        elif not type(init.rettype) is type(typ):
             raise TypeMismatchInConstant(ast)
         
         if init.partype is VarDecl:
             raise IllegalConstantExpression(ast.value)
+
         elif init.partype is ConstDecl:
             if ast.constant.name in init.listName:
                 raise IllegalConstantExpression(ast.value)
@@ -349,6 +354,7 @@ class StaticChecker(BaseVisitor):
     def visitAssign(self, ast, c):
         lhs = self.visit(ast.lhs, c)
         exp = self.visit(ast.exp, c)
+
         if lhs.partype is ConstDecl:
             raise CannotAssignToConstant(ast)
         if type(lhs.rettype) is IntType:
@@ -359,6 +365,9 @@ class StaticChecker(BaseVisitor):
             if not type(exp.rettype) in [IntType, FloatType]:
                 raise TypeMismatchInStatement(ast)
             return FloatType()
+        
+        if not type(lhs.rettype) is type(exp.rettype):
+            raise TypeMismatchInStatement(ast)
 
     def visitIf(self, ast, c):
         expr = self.visit(ast.expr, c)
@@ -404,42 +413,61 @@ class StaticChecker(BaseVisitor):
                 for ele in c['global']:
                     if ast.obj == ele['decl'].name:
                         obj = MType(ele['decl'].store, ele['decl'].mtype)
+
+            if obj == None:
+                raise Undeclared(Class(), str(ast.obj.name))
+
+            if not type(obj.rettype) in [ClassType, ClassDecl]:
+                raise TypeMismatchInStatement(ast)
+
+            method = None
+
+            for ele in c['global']:
+                if ele['decl'].name == obj.rettype.classname:
+                    for member in ele['decl'].store:
+                        if member['decl'].name == ast.method:
+                            method = member
+
+                    # If method not in child class, then find in parent class
+                    if ele['parent'] is not None and method is None:
+                        for parentEle in c['global']:
+                            if parentEle['decl'].name == ele['parent']:
+                                for member in parentEle['decl'].store:
+                                    if member['decl'].name == ast.method:
+                                        method = member
+
+            if method is None:
+                raise Undeclared(Method(), ast.method.name)
+
+            if type(method['kind']) is Instance and type(obj.rettype) is ClassDecl:
+                raise IllegalMemberAccess(ast)
+
+            if type(method['kind']) is Static and type(obj.rettype) is ClassType:
+                raise IllegalMemberAccess(ast)
+
+            if not type(method['decl'].mtype.rettype) is VoidType:
+                raise TypeMismatchInStatement(ast)
         else:
-            obj = self.visit(ast.obj, c)
-
-        if obj == None:
-            raise Undeclared(Class(), str(ast.obj.name))
-
-        if not type(obj.rettype) in [ClassType, ClassDecl]:
-            raise TypeMismatchInStatement(ast)
-
-        method = None
-
-        for ele in c['global']:
-            if ele['decl'].name == obj.rettype.classname:
+            ele = self.visit(ast.obj, c)
+            kind = None
+            for ele in c['global']:
                 for member in ele['decl'].store:
-                    if member['decl'].name == ast.method:
-                        method = member
+                    if member['decl'].name == ast.method and 'body' in member:
+                        kind = member['kind']
+                        obj = MType(member['decl'].store, member['decl'].mtype)
 
-                # If method not in child class, then find in parent class
-                if ele['parent'] is not None and method is None:
-                    for parentEle in c['global']:
-                        if parentEle['decl'].name == ele['parent']:
-                            for member in parentEle['decl'].store:
-                                if member['decl'].name == ast.method:
-                                    method = member
+            if obj is None:
+                raise Undeclared(Method(), ast.method.name)
 
-        if method is None:
-            raise Undeclared(Method(), ast.method.name)
+            if not type(obj.rettype.rettype) is VoidType:
+                raise TypeMismatchInStatement(ast)
+            
+            if type(kind) is Static:
+                raise IllegalMemberAccess(ast)
 
-        if type(method['kind']) is Instance and type(obj.rettype) is ClassDecl:
-            raise IllegalMemberAccess(ast)
+            
 
-        if type(method['kind']) is Static and type(obj.rettype) is ClassType:
-            raise IllegalMemberAccess(ast)
-
-        if not type(method['decl'].mtype.rettype) is VoidType:
-            raise TypeMismatchInStatement(ast)
+        
 
     def visitId(self, ast, c):
         if 'decl' in c and c['decl'] != []:
@@ -465,7 +493,6 @@ class StaticChecker(BaseVisitor):
         left = self.visit(ast.left, c)
         right = self.visit(ast.right, c)
         typ = left.partype if left.partype is VarDecl else right.partype
-        print(left.rettype, right.rettype)
 
         if op in ['+', '-', '*', '/']:
             if type(left.rettype) in [IntType, FloatType] and type(right.rettype) in [IntType, FloatType]:
@@ -498,7 +525,6 @@ class StaticChecker(BaseVisitor):
     def visitUnaryOp(self, ast, c):
         op = ast.op
         body = self.visit(ast.body, c)
-        print(body.rettype)
         if op in ['+', '-']:
             if type(body.rettype) in [IntType, FloatType]:
                 return MType(body.partype, body.rettype, [body.listName])
@@ -527,43 +553,63 @@ class StaticChecker(BaseVisitor):
                 for ele in c['global']:
                     if ast.obj == ele['decl'].name:
                         obj = MType(ele['decl'].store, ele['decl'].mtype)
+
+            if obj == None:
+                raise Undeclared(Class(), str(ast.obj.name))
+
+            if not type(obj.rettype) in [ClassType, ClassDecl]:
+                raise TypeMismatchInExpression(ast)
+
+            method = None
+
+            for ele in c['global']:
+                if ele['decl'].name == obj.rettype.classname:
+                    for member in ele['decl'].store:
+                        if member['decl'].name == ast.method:
+                            method = member
+                    # If method not in child class, then find in parent class
+                    if ele['parent'] is not None and method is None:
+                        for parentEle in c['global']:
+                            if parentEle['decl'].name == ele['parent']:
+                                for member in parentEle['decl'].store:
+                                    if member['decl'].name == ast.method:
+                                        method = member
+
+            if method is None:
+                raise Undeclared(Method(), ast.method.name)
+
+            if type(method['kind']) is Instance and type(obj.rettype) is ClassDecl:
+                raise IllegalMemberAccess(ast)
+
+            if type(method['kind']) is Static and type(obj.rettype) is ClassType:
+                raise IllegalMemberAccess(ast)
+
+            if type(method['decl'].mtype.rettype) is VoidType:
+                raise TypeMismatchInStatement(ast)
+
+            return MType(None, method['decl'].mtype.rettype)
+
         else:
-            obj = self.visit(ast.obj, c)
-
-        if obj == None:
-            raise Undeclared(Class(), str(ast.obj.name))
-
-        if not type(obj.rettype) in [ClassType, ClassDecl]:
-            raise TypeMismatchInExpression(ast)
-
-        method = None
-
-        for ele in c['global']:
-            if ele['decl'].name == obj.rettype.classname:
+            ele = self.visit(ast.obj, c)
+            kind = None
+            for ele in c['global']:
                 for member in ele['decl'].store:
-                    if member['decl'].name == ast.method:
-                        method = member
-                # If method not in child class, then find in parent class
-                if ele['parent'] is not None and method is None:
-                    for parentEle in c['global']:
-                        if parentEle['decl'].name == ele['parent']:
-                            for member in parentEle['decl'].store:
-                                if member['decl'].name == ast.method:
-                                    method = member
+                    if member['decl'].name == ast.method and 'body' in member:
+                        kind = member['kind']
+                        obj = MType(member['decl'].store, member['decl'].mtype.rettype)
 
-        if method is None:
-            raise Undeclared(Method(), ast.method.name)
+            if obj is None:
+                raise Undeclared(Attribute(), ast.method.name)
 
-        if type(method['kind']) is Instance and type(obj.rettype) is ClassDecl:
-            raise IllegalMemberAccess(ast)
+            if type(obj.rettype) is VoidType:
+                raise TypeMismatchInStatement(ast)
 
-        if type(method['kind']) is Static and type(obj.rettype) is ClassType:
-            raise IllegalMemberAccess(ast)
+            if type(kind) is Static:
+                raise IllegalMemberAccess(ast)
 
-        if type(method['decl'].mtype.rettype) is VoidType:
-            raise TypeMismatchInStatement(ast)
+            return obj
 
-        return MType(None, method['decl'].mtype.rettype)
+        
 
     def visitNewExpr(self, ast, c):
         # Raise if don't have special method (constructor)
@@ -580,7 +626,6 @@ class StaticChecker(BaseVisitor):
         return MType(None, ClassType(ast.classname))
 
     def visitFieldAccess(self, ast, c):
-        # print(c[])
         obj = None
         if type(ast.obj) is Id:
             if 'decl' in c and c['decl'] != []:
@@ -600,42 +645,58 @@ class StaticChecker(BaseVisitor):
                     if ast.obj == ele['decl'].name:
                         obj = MType(ele['decl'].store, ele['decl'].mtype)
 
+
+            if not type(obj.rettype) in [ClassType, ClassDecl]:
+                raise TypeMismatchInExpression(ast)
+
+            field = None
+            for ele in c['global']:
+                if ele['decl'].name == obj.rettype.classname:
+                    for member in ele['decl'].store:
+                        if member['decl'].name == ast.fieldname:
+                            field = member
+
+                    # If field not in child class, then find in parent class
+                    if ele['parent'] is not None and field is None:
+                        for parentEle in c['global']:
+                            if parentEle['decl'].name == ele['parent']:
+                                for member in parentEle['decl'].store:
+                                    if member['decl'].name == ast.fieldname:
+                                        field = member
+
+            if field is None:
+                raise Undeclared(Attribute(), ast.fieldname.name)
+
+            if type(field['kind']) is Instance and type(obj.rettype) is ClassDecl:
+                raise IllegalMemberAccess(ast)
+
+            if type(field['kind']) is Static and type(obj.rettype) is ClassType:
+                raise IllegalMemberAccess(ast)
+
+            if type(field['decl'].mtype) is VoidType:
+                raise TypeMismatchInStatement(ast)
+
+            return MType(field['decl'].store, field['decl'].mtype)
+
         else:
-            obj = self.visit(ast.obj, c)
-
-        if not type(obj.rettype) in [ClassType, ClassDecl]:
-            raise TypeMismatchInExpression(ast)
-
-        field = None
-        for ele in c['global']:
-
-            if ele['decl'].name == obj.rettype.classname:
+            ele = self.visit(ast.obj, c)
+            for ele in c['global']:
                 for member in ele['decl'].store:
+                    if member['decl'].name == ast.fieldname and not 'body' in member:
+                        kind = member['kind']
+                        obj = MType(member['decl'].store, member['decl'].mtype)
 
-                    if member['decl'].name == ast.fieldname:
-                        field = member
-                # If field not in child class, then find in parent class
-                if ele['parent'] is not None and field is None:
-                    for parentEle in c['global']:
-                        if parentEle['decl'].name == ele['parent']:
-                            for member in parentEle['decl'].store:
-                                if member['decl'].name == ast.fieldname:
-                                    field = member
+            if obj is None:
+                raise Undeclared(Attribute(), ast.fieldname.name)
 
-        if field is None:
-            raise Undeclared(Attribute(), ast.fieldname.name)
+            if type(obj.rettype) is VoidType:
+                raise TypeMismatchInStatement(ast)
 
-        if type(field['kind']) is Instance and type(obj.rettype) is ClassDecl:
-            raise IllegalMemberAccess(ast)
-
-        if type(field['kind']) is Static and type(obj.rettype) is ClassType:
-            raise IllegalMemberAccess(ast)
-
-        if type(field['decl'].mtype) is VoidType:
-            raise TypeMismatchInStatement(ast)
-
-        return MType(field['decl'].store, field['decl'].mtype)
-
+            if type(kind) is Static:
+                raise TypeMismatchInStatement(ast)
+            
+            return obj
+            
     def visitArrayCell(self, ast, c):
         arr, typ = None, None
         if type(ast.arr) is Id:
