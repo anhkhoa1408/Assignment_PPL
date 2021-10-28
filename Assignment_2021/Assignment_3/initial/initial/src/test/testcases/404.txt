@@ -1,1 +1,11 @@
-Program(List(FuncDecl(Id(main),List(),IntType,Block(List(),List(CallExpr(Id(putIntLn),List(CallExpr(Id(getInt),List(IntLiteral(4))))))))))
+
+        class Test {
+            float mult(int a; float b) {
+                return a*b;
+            }
+            void calc() {
+                int c;
+                c := this.mult(3, 4.5);
+            }
+        }
+        

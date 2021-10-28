@@ -187,51 +187,63 @@ class StaticChecker(BaseVisitor):
     io_listmem = [
         {
             "kind": Static(),
-            "decl": Symbol(Id("readInt"), MType([], IntType()), None)
+            "decl": Symbol(Id("readInt"), MType([], IntType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeInt"), MType([IntType()], VoidType()), None)
+            "decl": Symbol(Id("writeInt"), MType([IntType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeIntLn"), MType([IntType()], VoidType()), None)
+            "decl": Symbol(Id("writeIntLn"), MType([IntType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("readFloat"), MType([], FloatType()), None)
+            "decl": Symbol(Id("readFloat"), MType([], FloatType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeFloat"), MType([FloatType()], VoidType()), None)
+            "decl": Symbol(Id("writeFloat"), MType([FloatType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeFloatLn"), MType([FloatType()], VoidType()), None)
+            "decl": Symbol(Id("writeFloatLn"), MType([FloatType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("readBool"), MType([], BoolType()), None)
+            "decl": Symbol(Id("readBool"), MType([], BoolType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeBool"), MType([BoolType()], VoidType()), None)
+            "decl": Symbol(Id("writeBool"), MType([BoolType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeBoolLn"), MType([BoolType()], VoidType()), None)
+            "decl": Symbol(Id("writeBoolLn"), MType([BoolType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("readStr"), MType([], StringType()), None)
+            "decl": Symbol(Id("readStr"), MType([], StringType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeStr"), MType([StringType()], VoidType()), None)
+            "decl": Symbol(Id("writeStr"), MType([StringType()], VoidType()), None),
+            "body": None
         },
         {
             "kind": Static(),
-            "decl": Symbol(Id("writeStrLn"), MType([StringType()], VoidType()), None)
+            "decl": Symbol(Id("writeStrLn"), MType([StringType()], VoidType()), None),
+            "body": None
         },
     ]
 
@@ -293,8 +305,16 @@ class StaticChecker(BaseVisitor):
         typ = self.visit(ast.varType, c)
         init = self.visit(ast.varInit, c) if ast.varInit else None
 
+        if type(typ) is ArrayType:
+            typ = typ.eleType
+
         if type(typ) is FloatType:
             if init and not type(init.rettype) in [IntType, FloatType]:
+                raise TypeMismatchInExpression(ast.varInit)
+        elif type(typ) is ClassType:
+            if not typ.classname in list(map(lambda x: x['decl'].name, c['global'])):
+                raise Undeclared(Class(), typ.classname.name)
+            if init and not type(init.rettype) in [NullLiteral, ClassType]:
                 raise TypeMismatchInExpression(ast.varInit)
         elif init and not type(init.rettype) is type(typ):
             raise TypeMismatchInExpression(ast.varInit)
@@ -307,18 +327,25 @@ class StaticChecker(BaseVisitor):
         init = self.visit(ast.value, c) if ast.value else None
         storeType = type(ast)
 
+        if type(typ) is ArrayType:
+            typ = typ.eleType
+
         if init is None:
             raise IllegalConstantExpression(ast.value)
 
         if type(typ) is FloatType:
             if not type(init.rettype) in [IntType, FloatType]:
                 raise TypeMismatchInExpression(ast.value)
+        elif type(typ) is ClassType:
+            if not typ.classname in list(map(lambda x: x['decl'].name, c['global'])):
+                raise Undeclared(Class(), typ.classname.name)
+            if init and not type(init.rettype) in [NullLiteral, ClassType]:
+                raise TypeMismatchInExpression(ast.value)
         elif not type(init.rettype) is type(typ):
             raise TypeMismatchInConstant(ast)
         
         if init.partype is VarDecl:
             raise IllegalConstantExpression(ast.value)
-
         elif init.partype is ConstDecl:
             if ast.constant.name in init.listName:
                 raise IllegalConstantExpression(ast.value)
@@ -394,6 +421,9 @@ class StaticChecker(BaseVisitor):
         if 'loop' not in c:
             raise MustInLoop(ast)
 
+    def visitReturn(self, ast, c):
+        self.visit(ast.expr, c)
+
     def visitCallStmt(self, ast, c):
         obj = None
         if type(ast.obj) is Id:
@@ -425,7 +455,7 @@ class StaticChecker(BaseVisitor):
             for ele in c['global']:
                 if ele['decl'].name == obj.rettype.classname:
                     for member in ele['decl'].store:
-                        if member['decl'].name == ast.method:
+                        if "body" in member and member['decl'].name == ast.method:
                             method = member
 
                     # If method not in child class, then find in parent class
@@ -433,7 +463,7 @@ class StaticChecker(BaseVisitor):
                         for parentEle in c['global']:
                             if parentEle['decl'].name == ele['parent']:
                                 for member in parentEle['decl'].store:
-                                    if member['decl'].name == ast.method:
+                                    if "body" in member and member['decl'].name == ast.method:
                                         method = member
 
             if method is None:
@@ -463,11 +493,7 @@ class StaticChecker(BaseVisitor):
                 raise TypeMismatchInStatement(ast)
             
             if type(kind) is Static:
-                raise IllegalMemberAccess(ast)
-
-            
-
-        
+                raise IllegalMemberAccess(ast)   
 
     def visitId(self, ast, c):
         if 'decl' in c and c['decl'] != []:
@@ -494,11 +520,15 @@ class StaticChecker(BaseVisitor):
         right = self.visit(ast.right, c)
         typ = left.partype if left.partype is VarDecl else right.partype
 
-        if op in ['+', '-', '*', '/']:
+        if op in ['+', '-', '*']:
             if type(left.rettype) in [IntType, FloatType] and type(right.rettype) in [IntType, FloatType]:
                 if type(left.rettype) is FloatType or type(right.rettype) is FloatType:
-                    return MType(typ, FloatType(), [left.name, right.name])
+                    return MType(typ, FloatType(), [left.listName, right.listName])
                 return MType(typ, IntType(), [left.listName, right.listName])
+            raise TypeMismatchInExpression(ast)
+        if op == '/':
+            if type(left.rettype) in [IntType, FloatType] and type(right.rettype) in [IntType, FloatType]:
+                return MType(typ, FloatType(), [left.listName, right.listName])
             raise TypeMismatchInExpression(ast)
         elif op in ['\\', '%']:
             if type(left.rettype) is IntType and type(right.rettype) is IntType:
@@ -565,14 +595,15 @@ class StaticChecker(BaseVisitor):
             for ele in c['global']:
                 if ele['decl'].name == obj.rettype.classname:
                     for member in ele['decl'].store:
-                        if member['decl'].name == ast.method:
+                        if "body" in member and member['decl'].name == ast.method:
                             method = member
+
                     # If method not in child class, then find in parent class
                     if ele['parent'] is not None and method is None:
                         for parentEle in c['global']:
                             if parentEle['decl'].name == ele['parent']:
                                 for member in parentEle['decl'].store:
-                                    if member['decl'].name == ast.method:
+                                    if "body" in member and member['decl'].name == ast.method:
                                         method = member
 
             if method is None:
@@ -613,15 +644,15 @@ class StaticChecker(BaseVisitor):
 
     def visitNewExpr(self, ast, c):
         # Raise if don't have special method (constructor)
-        specialMethod = None
-        for ele in c['global']:
-            if ele['decl'].name == ast.classname:
-                for member in ele['decl'].store:
-                    if member['decl'].name == ast.classname:
-                        specialMethod = member
+        # specialMethod = None
+        # for ele in c['global']:
+        #     if ele['decl'].name == ast.classname:
+        #         for member in ele['decl'].store:
+        #             if member['decl'].name == ast.classname:
+        #                 specialMethod = member
 
-        if specialMethod is None:
-            raise Undeclared(SpecialMethod(), ast.classname.name)
+        # if specialMethod is None:
+        #     raise Undeclared(SpecialMethod(), ast.classname.name)
 
         return MType(None, ClassType(ast.classname))
 
@@ -653,7 +684,7 @@ class StaticChecker(BaseVisitor):
             for ele in c['global']:
                 if ele['decl'].name == obj.rettype.classname:
                     for member in ele['decl'].store:
-                        if member['decl'].name == ast.fieldname:
+                        if not "body" in member and member['decl'].name == ast.fieldname:
                             field = member
 
                     # If field not in child class, then find in parent class
@@ -661,7 +692,7 @@ class StaticChecker(BaseVisitor):
                         for parentEle in c['global']:
                             if parentEle['decl'].name == ele['parent']:
                                 for member in parentEle['decl'].store:
-                                    if member['decl'].name == ast.fieldname:
+                                    if not "body" in member and member['decl'].name == ast.fieldname:
                                         field = member
 
             if field is None:
@@ -703,24 +734,24 @@ class StaticChecker(BaseVisitor):
             if 'decl' in c and c['decl'] != []:
                 for ele in c['decl']:
                     if ast.arr == ele.name:
-                        arr = MType(ele.store, ele.mtype.eleType)
+                        arr = MType(ele.store, ele.mtype)
                         typ = ele.mtype
             if 'param' in c and c['param'] != [] and arr is None:
                 for ele in c['param']:
                     if ast.arr == ele.name:
-                        arr = MType(ele.store, ele.mtype.eleType)
+                        arr = MType(ele.store, ele.mtype)
                         typ = ele.mtype
             if 'class' in c and c['class'] != [] and arr is None:
                 for ele in c['class']:
                     if ast.arr == ele['decl'].name:
                         arr = MType(ele['decl'].store,
-                                    ele['decl'].mtype.eleType)
+                                    ele['decl'].mtype)
                         typ = ele['decl'].mtype
             if 'global' in c and c['global'] != [] and arr is None:
                 for ele in c['global']:
                     if ast.arr == ele['decl'].name:
                         arr = MType(ele['decl'].store,
-                                    ele['decl'].mtype.eleType)
+                                    ele['decl'].mtype)
                         typ = ele['decl'].mtype
 
         idx = self.visit(ast.idx, c)
@@ -735,6 +766,7 @@ class StaticChecker(BaseVisitor):
             eleType = self.visit(ele, c).rettype
             if not type(eleType) is type(typ):
                 raise IllegalArrayLiteral(ast)
+        return MType(None, typ)
 
     def visitVoidType(self, ast, c):
         return VoidType()

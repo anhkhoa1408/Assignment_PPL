@@ -1,0 +1,15 @@
+
+         class x extends y{
+            int a,b;
+            int foo(int a,v,b) {
+                x d;
+            }
+            void main() {
+                x d;
+                int m;
+                d.foo(2,3,4);
+            }
+        }
+        class y {
+        }
+        

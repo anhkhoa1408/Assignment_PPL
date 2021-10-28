@@ -1,0 +1,1 @@
+Type Mismatch In Statement: CallExpr(FieldAccess(Self(),Id(x)),Id(foo),[IntLit(5),IntLit(4),FieldAccess(Self(),Id(x))])

@@ -1,0 +1,11 @@
+
+         class a {
+            int b;
+            void main(){
+                int a;
+                for a := this.b to 7 do 
+                    continue;
+                a := a.b;
+            }
+        }
+        

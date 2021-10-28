@@ -1,0 +1,8 @@
+
+        class main extends B{
+            B a;
+            static int j;
+            int m  = this.m + 5 + this.c;
+        }
+        
+        

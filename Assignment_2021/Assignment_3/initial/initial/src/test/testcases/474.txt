@@ -1,0 +1,8 @@
+
+         class x {
+            int foo() {
+                x m;
+                break;
+            }
+        }
+        

@@ -1,17 +1,12 @@
 
-        class a {
-            int a = 0;
-            final float b = 0.2;
-            int c = 0;
-            boolean d = false;
-            static boolean e = false;
-            int foo(int b) {
-                this.foo2();
-            }
-            void foo2() {
+        class ABC{
+            int x;
+            static int y;
+        }
+        class DEF{
+            int main(){
+                string[5] s = {"a", "b", "c"};
+                s[5] := "a";
             }
         }
-
-        
-
         

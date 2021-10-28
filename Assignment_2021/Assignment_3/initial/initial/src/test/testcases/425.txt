@@ -1,0 +1,7 @@
+
+        class A{
+            A a;
+            int foo() {}
+            int b = 1 + this.a.foo() * 2; 
+        }
+        

@@ -1,0 +1,6 @@
+
+        class b {
+            final float z = 6.5;
+            final int c = 5 + this.z;
+        }
+        

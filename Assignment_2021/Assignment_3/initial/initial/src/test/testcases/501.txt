@@ -1,1 +1,10 @@
-Program(List(FuncDecl(Id(main),List(),VoidType,Block(List(),List(CallExpr(Id(putInt),List(IntLiteral(5))))))))
+
+        class ABC{
+            final int a = 1;
+            final int b = this.a.foo();
+            int foo(){
+                ABC obj;
+                return obj;
+            }
+        }
+        

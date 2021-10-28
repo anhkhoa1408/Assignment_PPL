@@ -1,1 +1,1 @@
-Type Mismatch In Expression: CallExpr(Id(getInt),List(IntLiteral(4)))
+Type Mismatch In Expression: ArrayCell(CallExpr(Id(s),Id(y),[]),IntLit(1))

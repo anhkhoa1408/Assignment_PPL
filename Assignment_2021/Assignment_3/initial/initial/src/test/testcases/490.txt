@@ -1,0 +1,9 @@
+
+         class A{
+            B x;
+            int n = this.x.m;
+        }
+        class B{
+            int m;
+        }
+        

@@ -1,0 +1,9 @@
+
+        class main extends B{
+            B x = nil;
+            int c = this.x.e;
+        }
+        class B{
+            int e;
+        }
+        

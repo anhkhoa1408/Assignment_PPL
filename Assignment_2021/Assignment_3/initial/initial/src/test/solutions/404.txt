@@ -1,1 +1,1 @@
-Type Mismatch In Expression: CallExpr(Id(getInt),List(IntLiteral(4)))
+Type Mismatch In Statement: AssignStmt(Id(c),CallExpr(Self(),Id(mult),[IntLit(3),FloatLit(4.5)]))

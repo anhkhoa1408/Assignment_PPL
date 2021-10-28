@@ -1,0 +1,5 @@
+
+        class X{
+            int[5] abiwe = {1,2,3,true};
+        }
+        

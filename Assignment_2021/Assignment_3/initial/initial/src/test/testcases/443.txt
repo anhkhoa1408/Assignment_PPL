@@ -1,0 +1,12 @@
+
+        class A {
+            int get(int a; float b) {} 
+        }
+        class B {
+            int get; 
+        }
+        class C {
+            B b = new B(); 
+            int get = b.get();
+        }
+        

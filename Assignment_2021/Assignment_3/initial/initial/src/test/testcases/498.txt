@@ -1,0 +1,11 @@
+
+         class x extends y{
+            int a,b;
+            static int m;
+            int foo(int a,v,b) {
+                return m ^ "a";
+            }
+        }
+        class y {
+        }
+        

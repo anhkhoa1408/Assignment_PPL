@@ -1,1 +1,8 @@
-void main() {putInt(100);}
+
+        class A{
+            int[4] foo(){
+                int[3] a;
+                return a;
+            }
+        }
+        

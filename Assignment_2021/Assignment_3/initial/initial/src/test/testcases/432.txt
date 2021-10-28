@@ -1,0 +1,8 @@
+
+        class main {
+            final int k = 8;
+            float foo(int foo,c){
+                final int f = 2.0;
+            }
+        }
+        

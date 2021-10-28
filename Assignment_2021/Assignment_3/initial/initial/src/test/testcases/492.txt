@@ -1,0 +1,10 @@
+
+        class A{
+            int a;
+        }
+        class B extends A{
+            void foo(){
+                A.a();
+            }
+        }
+        

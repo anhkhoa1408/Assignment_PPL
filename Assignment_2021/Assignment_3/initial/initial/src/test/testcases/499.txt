@@ -1,0 +1,8 @@
+
+        class x extends A{
+            final int a = this.x + this.g;
+        }
+        class A{
+            final int g = 0;
+        }
+        

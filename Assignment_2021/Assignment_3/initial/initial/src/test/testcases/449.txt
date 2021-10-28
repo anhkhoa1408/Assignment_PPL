@@ -1,0 +1,8 @@
+
+        class Test {
+            final int c = 9;
+            int fun(){
+                this.c := 0;
+            }
+        }
+        

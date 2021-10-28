@@ -1,1 +1,1 @@
-Undeclared Function: foo
+Type Mismatch In Statement: AssignStmt(CallExpr(Id(s),Id(y),[]),FloatLit(0.5))

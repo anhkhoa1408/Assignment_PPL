@@ -1,0 +1,11 @@
+
+        class main {
+            static int a;
+            int foo(){
+                int i;
+                main.a := 5;
+                for i := 0 to 5 do
+                   i := 1;
+            }
+        }
+        

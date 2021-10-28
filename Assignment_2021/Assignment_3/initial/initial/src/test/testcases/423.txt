@@ -1,0 +1,9 @@
+
+        class X {
+            int foo(){
+
+            }
+            int a = this.foo();
+            int b = this.foo() / 2;
+        }
+        

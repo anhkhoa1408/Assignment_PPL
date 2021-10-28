@@ -1,0 +1,11 @@
+
+        class A{
+            int foo() {
+                B x;
+                int a = x.c;
+            }
+        }
+        class B{
+            int b;
+        }
+        

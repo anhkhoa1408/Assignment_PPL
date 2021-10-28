@@ -1,0 +1,6 @@
+
+        class X{
+            final int a = 1 + this.b;
+            final int b = 9 && 1;
+        }
+        

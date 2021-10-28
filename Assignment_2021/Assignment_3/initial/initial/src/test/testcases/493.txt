@@ -1,0 +1,11 @@
+
+        class A{
+            int a = io.readInt();
+            int c = io.readStr();
+            void main(){
+                int k;
+                boolean b;
+                io.writeFloat(k);
+            }
+        }
+        

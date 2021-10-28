@@ -1,0 +1,10 @@
+
+        class main{
+            final int n = 0;
+            int main() {
+                final int x = 2;
+                int i;
+                continue;
+            }
+        }
+        

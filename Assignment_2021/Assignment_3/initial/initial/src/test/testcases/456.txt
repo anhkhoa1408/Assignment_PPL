@@ -1,0 +1,9 @@
+
+        class main{
+            boolean q,w,r,t,a;
+            int b(int a,b,c; float d) {
+                int x;
+                string b;
+            } 
+        }
+        

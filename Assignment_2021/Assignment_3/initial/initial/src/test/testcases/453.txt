@@ -1,0 +1,8 @@
+
+        class hello {
+            int foo(){
+                this.a := 2;
+            }
+
+        }
+        

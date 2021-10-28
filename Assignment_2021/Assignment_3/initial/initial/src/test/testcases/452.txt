@@ -1,0 +1,8 @@
+
+        class x {
+            int foo(){
+                int a;
+                a := 1 + 2.2;
+            }
+        }
+        

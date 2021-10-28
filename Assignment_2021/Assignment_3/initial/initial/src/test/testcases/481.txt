@@ -1,0 +1,14 @@
+
+        class hello {
+        int b(){}
+        int foo(){
+            int x;
+            int i;
+        for i := 1 to 100 do 
+            io.writeIntLn(i);
+    
+        for x := 5 downto 2 do
+            io.writeIntLn(x);
+
+        this.d := 0;
+        

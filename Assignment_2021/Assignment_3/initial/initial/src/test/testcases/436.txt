@@ -1,0 +1,9 @@
+
+        class X{
+            static final int k = 8;
+            int foo(){
+                X X;
+                return X.k;
+            }
+        }
+        

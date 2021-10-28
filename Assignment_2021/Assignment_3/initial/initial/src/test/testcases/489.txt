@@ -1,0 +1,7 @@
+
+         class a extends b{
+            final b y = x;
+        }
+        class b{}
+        class c{}
+        

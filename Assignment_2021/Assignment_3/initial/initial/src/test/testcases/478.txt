@@ -1,0 +1,9 @@
+
+        class hello {
+            static int foo;
+            int main(){
+                int hello;
+                int b = hello.foo ^ "aaa";
+            }
+        }
+        

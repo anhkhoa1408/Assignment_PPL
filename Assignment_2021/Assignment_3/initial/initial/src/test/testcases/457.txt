@@ -1,0 +1,6 @@
+
+        class main{
+            foo(){}
+            foo(int a){}
+        }
+        

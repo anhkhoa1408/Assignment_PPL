@@ -1,1 +1,9 @@
-Program(List(FuncDecl(Id(main),List(),IntType,Block(List(),List(CallExpr(Id(foo),List()))))))
+
+        class Shape {
+            int y() {int[5] t; return t;}
+            int c() {
+                Shape s;
+                s.y() := 0.5;
+            }
+        }
+        

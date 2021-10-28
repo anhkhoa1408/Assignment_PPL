@@ -1,0 +1,9 @@
+
+        class hello {
+            int b(){}
+            int foo(){
+                int a;
+                if 1 then a:=0;
+            }
+        }
+        

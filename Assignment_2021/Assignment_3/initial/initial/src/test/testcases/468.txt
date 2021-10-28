@@ -1,0 +1,8 @@
+
+        class A{
+            static int k;
+            int foo(){
+                int c = A.k % 12.2;
+            }
+        }
+        

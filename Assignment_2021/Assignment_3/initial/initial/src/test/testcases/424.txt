@@ -1,0 +1,10 @@
+
+        class X extends B{
+            int foo(){}
+            static int boo(){}
+            final X bin = nil;
+        }
+        class B{
+            int n;
+        }
+        

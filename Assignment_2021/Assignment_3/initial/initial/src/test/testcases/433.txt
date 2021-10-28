@@ -1,0 +1,12 @@
+
+        class main{
+            final int k = 8;
+            final B x = 0;
+        }
+        class B{
+            int e;
+            B() {
+
+            }
+        }
+        

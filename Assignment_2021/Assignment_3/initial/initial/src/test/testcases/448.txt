@@ -1,0 +1,9 @@
+
+        class Test {
+            int fun(){
+                Test a;
+                a := new Test(9);
+                a.b := 0;
+            }
+        }
+        

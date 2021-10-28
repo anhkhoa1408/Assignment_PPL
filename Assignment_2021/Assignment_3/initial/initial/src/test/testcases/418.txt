@@ -1,0 +1,11 @@
+
+        class main extends B{
+            int ma() {
+                final int x = x;
+                continue;
+            }
+        }
+        class B{
+            int b;
+        }
+        

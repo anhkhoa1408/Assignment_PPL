@@ -1,0 +1,9 @@
+
+        class D{
+            static int foo(int a){}
+            float main(){
+                return 5 + 3;
+                break;
+            }
+        }
+        
