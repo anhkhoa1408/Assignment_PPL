@@ -1,0 +1,31 @@
+
+            class BKoolClass {
+                BkoolClass bk = new BkoolClass();
+                int c = 0;
+                int d = e.foo(1, 2 * 2) + 1;
+                static int sjoefij = 1;
+                D e = new D(1,2);
+                BKoolClass bas = new BKoolClass();
+
+                int foo1() {
+                    int aeopw, uriuwm;
+                    BKoolClass basd = new BKoolClass();
+                    c := D.c;
+                    return c * this.d;
+                }
+
+                float foo2() {
+                    c := this.bas.e.z;
+                    c := bas.c;
+                    return 0;
+                }   
+            }
+
+            class D {
+                int z = 0;
+                static int c = 1;
+                static int foo() {
+                    return 0;
+                }
+            }
+        

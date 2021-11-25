@@ -1,0 +1,19 @@
+
+            class BKoolClass {
+                static final int z = 22;
+                static int l = 1;
+                int j, k, p, q, r;
+                static int c = 100;
+                final int l = 1000;
+                string a = "lll";
+                int b = 10;
+                final boolean qwew = true;
+                final boolean wf9ekp = false;
+
+                static int foo() {
+                    int afnalfjoi = 0;
+                    qwew := !wf9ekp;
+                    b := -b + l;
+                }
+            }
+        

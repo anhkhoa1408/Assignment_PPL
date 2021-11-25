@@ -1,0 +1,6 @@
+
+            class BKoolClass {
+                
+                static final int a = 12123;
+            }
+        

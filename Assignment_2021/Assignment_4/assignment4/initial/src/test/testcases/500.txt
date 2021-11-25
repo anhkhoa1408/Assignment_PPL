@@ -1,0 +1,13 @@
+
+            class BKoolClass {
+                static final int z = 22;
+                
+
+                int foo(int a; int b) {
+                    int t = 0;
+                    string abc = "avkjn";
+                    z := +1;
+                    abc := "1";
+                }
+            }
+        
