@@ -217,21 +217,13 @@ class CheckCodeGenSuite(unittest.TestCase):
         input = """
             class BKoolClass {
                 BkoolClass bk = new BkoolClass();
-                int c = 0;
-                int d = e.foo(1, 2 * 2) + 1;
-                static int sjoefij = 1;
-                D e = new D(1,2);
                 BKoolClass bas = new BKoolClass();
+                D class_d = new D();
+                int c = 0;
 
-                int foo1() {
-                    int aeopw, uriuwm;
-                    BKoolClass basd = new BKoolClass();
-                    c := D.c;
-                    return c * this.d;
-                }
-
-                float foo2() {
-                    c := this.bas.e.z;
+                int foo2() {
+                    BKoolClass bas2 = new BKoolClass();
+                    c := bas2.class_d.foo2();
                     return 0;
                 }   
             }
@@ -240,12 +232,14 @@ class CheckCodeGenSuite(unittest.TestCase):
                 int z = 0;
                 static int c = 1;
                 static BKoolClass bk2 = new BKoolClass();
-                static int foo() {
-                    return 0;
-                }
+                boolean z = true;
+                boolean z1 = false;
 
-                int foo2() {
-                    return 0;
+                int foo2(int a; int b) {
+                    for a := 0 to 2 do
+                        
+
+                        continue;
                 }
             }
         """

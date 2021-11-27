@@ -2,50 +2,28 @@
 .class public BKoolClass
 .super java.lang.Object
 .field bk LBkoolClass;
-.field c I
-.field d I
-.field static sjoefij I
-.field e LD;
 .field bas LBKoolClass;
+.field class_d LD;
+.field c I
 
-.method public foo1()I
+.method public foo2()I
 .var 0 is this LBKoolClass; from Label0 to Label1
-.var 1 is aeopw I from Label0 to Label1
-.var 2 is uriuwm I from Label0 to Label1
-.var 3 is basd LBKoolClass; from Label0 to Label1
+.var 1 is bas2 LBKoolClass; from Label0 to Label1
 Label0:
 	new BKoolClass
 	dup
 	invokespecial java/lang/Object/<init>()V
-	astore_3
+	astore_1
 	aload_0
-	getstatic D.c I
-	putfield BKoolClass.c I
-	aload_0
-	getfield BKoolClass.c I
-	aload_0
-	getfield BKoolClass.d I
-	imul
-	ireturn
-Label1:
-.limit stack 3
-.limit locals 4
-.end method
-
-.method public foo2()F
-.var 0 is this LBKoolClass; from Label0 to Label1
-Label0:
-	aload_0
-	aload_0
-	getfield BKoolClass.bas LBKoolClass;
-	getfield BKoolClass.e LD;
-	getfield D.z I
+	aload_1
+	getfield BKoolClass.class_d LD;
+	invokevirtual D/foo2()I
 	putfield BKoolClass.c I
 	iconst_0
 	ireturn
 Label1:
-.limit stack 3
-.limit locals 1
+.limit stack 5
+.limit locals 2
 .end method
 
 .method public <init>()V
@@ -59,35 +37,20 @@ Label0:
 	invokespecial BkoolClass()V
 	putfield BKoolClass.bk LBkoolClass;
 	aload_0
-	iconst_0
-	putfield BKoolClass.c I
-	aload_0
-	invokevirtual D/foo(II)LD;
-	iconst_1
-	fadd
-	putfield BKoolClass.d I
-	aload_0
-	new D
-	dup
-	invokespecial D(II)V
-	putfield BKoolClass.e LD;
-	aload_0
 	new BKoolClass
 	dup
 	invokespecial java/lang/Object/<init>()V
 	putfield BKoolClass.bas LBKoolClass;
+	aload_0
+	new D
+	dup
+	invokespecial D()V
+	putfield BKoolClass.class_d LD;
+	aload_0
+	iconst_0
+	putfield BKoolClass.c I
 Label1:
 	return
-.limit stack 6
+.limit stack 4
 .limit locals 1
-.end method
-
-.method public static <clinit>()V
-Label0:
-	iconst_1
-	putstatic BKoolClass.sjoefij I
-Label1:
-	return
-.limit stack 2
-.limit locals 0
 .end method

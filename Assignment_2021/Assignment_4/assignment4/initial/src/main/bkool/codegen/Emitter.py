@@ -317,8 +317,11 @@ class Emitter():
 
         typ = in_
         list(map(lambda x: frame.pop(), typ.partype))
-        frame.pop()
-        if not type(typ) is VoidType:
+
+        if frame.currOpStackSize > 0:
+            frame.pop()
+
+        if not type(typ.rettype) is VoidType:
             frame.push()
         return self.jvm.emitINVOKEVIRTUAL(lexeme, self.getJVMType(in_))
 
@@ -336,12 +339,12 @@ class Emitter():
         else:
             return self.jvm.emitFNEG()
 
-    def emitNOT(self, in_, frame):
+    def emitNOT(self, in_, frame, falseLabel = None, isUnary = None):
         #in_: Type
         #frame: Frame
 
-        label1 = frame.getNewLabel()
-        label2 = frame.getNewLabel()
+        label1 = frame.getNewLabel() if not falseLabel else falseLabel
+        label2 = frame.getNewLabel() 
         result = list()
         result.append(self.emitIFTRUE(label1, frame))
         result.append(self.emitPUSHCONST(1, in_, frame))
@@ -349,7 +352,8 @@ class Emitter():
         result.append(self.emitLABEL(label1, frame))
         result.append(self.emitPUSHCONST(0, in_, frame))
         result.append(self.emitLABEL(label2, frame))
-        return ''.join(result)
+
+        return ''.join(result) if not isUnary else result[0]
 
     '''
     *   generate iadd, isub, fadd or fsub.
@@ -476,7 +480,7 @@ class Emitter():
         result.append(self.emitLABEL(labelO, frame))
         return ''.join(result)
 
-    def emitRELOP(self, op, in_, trueLabel, falseLabel, frame):
+    def emitRELOP(self, op, in_, falseLabel, frame):
         #op: String
         #in_: Type
         #trueLabel: Int
@@ -490,7 +494,6 @@ class Emitter():
         frame.pop()
         if op == ">":
             result.append(self.jvm.emitIFICMPLE(falseLabel))
-            result.append(self.emitGOTO(trueLabel))
         elif op == ">=":
             result.append(self.jvm.emitIFICMPLT(falseLabel))
         elif op == "<":
@@ -501,7 +504,6 @@ class Emitter():
             result.append(self.jvm.emitIFICMPEQ(falseLabel))
         elif op == "==":
             result.append(self.jvm.emitIFICMPNE(falseLabel))
-        result.append(self.jvm.emitGOTO(trueLabel))
         return ''.join(result)
 
     '''   generate the method directive for a function.
@@ -564,7 +566,7 @@ class Emitter():
         #frame: Frame
 
         frame.pop()
-        return self.jvm.emitIFLE(label)
+        return self.jvm.emitIFNE(label)
 
     def emitIFICMPGT(self, label, frame):
         #label: Int
