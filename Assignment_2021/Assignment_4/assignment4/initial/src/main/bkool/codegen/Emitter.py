@@ -32,7 +32,7 @@ class Emitter():
         elif typeIn is ClassType:
             return "L" + inType.classname.name + ";"
 
-    def getFullType(inType):
+    def getFullType(self, inType):
         typeIn = type(inType)
         if typeIn is IntType:
             return "int"
@@ -129,7 +129,6 @@ class Emitter():
             return self.jvm.emitFASTORE()
         elif type(in_) is BoolType:
             return self.jvm.emitBASTORE()
-        #elif type(in_) is cgen.ArrayPointerType or type(in_) is cgen.ClassType or type(in_) is StringType:
         elif type(in_) is ClassType or type(in_) is StringType:
             return self.jvm.emitAASTORE()
         else:
@@ -200,7 +199,7 @@ class Emitter():
         elif type(inType) is FloatType:
             return self.jvm.emitFSTORE(index)
         #elif type(inType) is cgen.ArrayPointerType or type(inType) is cgen.ClassType or type(inType) is StringType:
-        elif  type(inType) is ClassType or type(inType) is StringType:
+        elif type(inType) is ClassType or type(inType) is StringType:
             return self.jvm.emitASTORE(index)
         else:
             raise IllegalOperandException(name)
@@ -693,6 +692,10 @@ class Emitter():
 
     def emitNEW(self, lexeme):
         return self.jvm.emitNEW(lexeme)
+
+    def emitNEWARRAY(self, typ):
+        full_type = self.getFullType(typ)
+        return self.jvm.emitNEWARRAY(full_type)
 
 
 

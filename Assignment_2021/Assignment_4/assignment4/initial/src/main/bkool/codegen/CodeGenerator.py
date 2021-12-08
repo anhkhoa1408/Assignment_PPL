@@ -311,10 +311,14 @@ class CodeGenVisitor(BaseVisitor):
         self.genMETHOD(MethodDecl(Instance(), Id("<init>"), list(
         ), VoidType(), Block([], instanceAttrList)), env, Frame("<init>", VoidType()))
 
+        # int a = 0;
+
         # generate class init method
         if len(staticAttrList) > 0:
             self.genMETHOD(MethodDecl(Static(), Id("<clinit>"), list(
             ), VoidType(), Block([], staticAttrList)), env, Frame("<clinit>", VoidType()))
+
+        # static a = 0;
 
         self.emit.emitEPILOG()
         return c
@@ -459,12 +463,26 @@ class CodeGenVisitor(BaseVisitor):
                     self.emit.printout(self.emit.emitREADVAR(
                         'this', ClassType(o.sym['current']['name']), 0, o.frame))
 
+        if isinstance(ast.exp, ArrayLiteral):
+            self.emit.printout(self.emit.emitNEWARRAY(IntType()))
+
         rcode, rtype = self.visit(ast.exp, Access(o.frame, o.sym, False)) if not self.visit(
             ast.exp, Access(o.frame, o.sym, False)) is None else ("", "")
-        self.emit.printout(rcode)
 
         lcode, ltype = self.visit(ast.lhs, Access(o.frame, o.sym, True))
-        self.emit.printout(lcode)
+
+        if not type(ltype) is ArrayType and not type(rtype) is ArrayType:
+            self.emit.printout(rcode)
+            self.emit.printout(lcode)
+
+        else:
+            self.emit.printout(rcode)
+            # self.emit.printout(self.emit.emitALOAD(rtype.eleType, o.frame))
+            self.emit.printout(lcode)
+            # self.emit.printout(self.emit.emitASTORE(ltype.eleType, o.frame))
+
+
+
 
     def visitIf(self, ast, o):
         falseLabel = o.frame.getNewLabel()
@@ -498,14 +516,14 @@ class CodeGenVisitor(BaseVisitor):
 
         if type(ast.loop) is Break:
             pass
-
         else:
             self.visit(ast.loop, o)
             inc_exp, inc_exptype = self.visit(BinaryOp('+' if ast.up else '-', ast.id, IntLiteral(
-            1) if ast.up else IntLiteral(-1)), Access(o.frame, o.sym, False))
+                1)), Access(o.frame, o.sym, False))
 
             self.emit.printout(inc_exp + id_code)
-            self.emit.printout(self.emit.emitGOTO(o.frame.getContinueLabel(), o.frame))
+            self.emit.printout(self.emit.emitGOTO(
+                o.frame.getContinueLabel(), o.frame))
 
             self.emit.printout(self.emit.emitLABEL(
                 o.frame.getBreakLabel(), o.frame))
@@ -516,13 +534,15 @@ class CodeGenVisitor(BaseVisitor):
         pass
 
     def visitBreak(self, ast, o):
-        self.emit.printout(self.emit.emitGOTO(o.frame.getBreakLabel(), o.frame))
-
-    # def visitContinue(self, ast, o):
-    #     self.emit.printout(self.emit.emitGOTO(o.frame.getContinueLabel(), o.frame))
+        self.emit.printout(self.emit.emitGOTO(
+            o.frame.getBreakLabel(), o.frame))
 
     def visitArrayCell(self, ast, o):
-        pass
+        arr_code, arr_type = self.visit(ast.arr, o)
+        idx_code, idx_type = self.visit(ast.idx, o)
+
+
+        return arr_code + idx_code, arr_type
 
     def visitBinaryOp(self, ast, o):
         e1c, e1t = self.visit(ast.left, o)
@@ -620,7 +640,6 @@ class CodeGenVisitor(BaseVisitor):
                     return code, typ
                 else:
                     typ = ele['decl'].mtype
-                    # print(ele['decl'].name)
 
                     for cls_ele in o.sym['global']:
                         if cls_ele['decl'].name == typ.classname:
@@ -653,7 +672,6 @@ class CodeGenVisitor(BaseVisitor):
                     for ele in o.sym['global']:
                         if ele['decl'].name == cls_ele['decl'].mtype.classname:
                             for mem in ele['decl'].store:
-                                # print(mem['decl'].name, ast.method)
                                 if mem['decl'].name == ast.method:
                                     new_typ = mem['decl'].mtype
 
@@ -663,7 +681,6 @@ class CodeGenVisitor(BaseVisitor):
                     return code, new_typ
 
     def visitFieldAccess(self, ast, o):
-        # print(ast)
         if type(ast.obj) is SelfLiteral:
             ele = next(filter(
                 lambda x: x['decl'].name == ast.fieldname, o.sym['current']['listmem']), None)
@@ -738,8 +755,6 @@ class CodeGenVisitor(BaseVisitor):
             field_code, field_typ = self.visit(ast.obj, o)
             new_typ = None
 
-            print(field_code)
-
             if type(ast.obj) is FieldAccess:
                 cls_ele = next(filter(
                     lambda x: x['decl'].name == ast.obj.fieldname, o.sym['current']['listmem']), None)
@@ -760,11 +775,9 @@ class CodeGenVisitor(BaseVisitor):
                         for ele in global_ele['decl'].store:
                             if ele['decl'].name == ast.obj.fieldname:
                                 name = ele['decl'].mtype.classname.name
-                                # print(name)
 
                         for ele in o.sym['global']:
                             if ele['decl'].name.name == name:
-                                print(ele['decl'].name.name)
                                 for mem in ele['decl'].store:
                                     if mem['decl'].name == ast.fieldname:
                                         typ = mem['decl'].mtype
@@ -793,6 +806,37 @@ class CodeGenVisitor(BaseVisitor):
     def visitBooleanLiteral(self, ast, o):
         return self.emit.emitPUSHICONST(str(ast.value), o.frame), BoolType()
 
+    def visitArrayType(self, ast, o):
+        code = self.emit.emitPUSHICONST(ast.size, o.frame)
+        code += self.emit.emitNEWARRAY(ast.eleType)
+        return code
+
+    def visitArrayLiteral(self, ast, o):
+        code = ''
+        for index in range(0, len(ast.value)):
+            code += self.emit.emitDUP(o.frame)
+            code += self.emit.emitPUSHICONST(index, o.frame)
+            if type(ast.value[index]) is IntLiteral:
+                typ = IntType()
+                code += self.emit.emitPUSHICONST(
+                    ast.value[index].value, o.frame)
+            elif type(ast.value[index]) is FloatLiteral:
+                typ = FloatType()
+                code += self.emit.emitPUSHFCONST(
+                    ast.value[index].value, o.frame)
+            elif type(ast.value[index]) is StringLiteral:
+                typ = StringType()
+                code += self.emit.emitPUSHCONST(
+                    ast.value[index].value, StringType(), o.frame)
+            elif type(ast.value[index]) is BooleanLiteral:
+                typ = BoolType()
+                code += self.emit.emitPUSHICONST(
+                    str(ast.value[index].value), o.frame)
+
+            code += self.emit.emitASTORE(typ, o.frame)
+
+        return code, ArrayType(len(ast.value), typ)
+
     def visitId(self, ast, o):
         if 'initField' in o.sym and o.sym['initField'] is True:
             typ = next(filter(lambda ele: ele['decl'].name == ast, o.sym['current']['listmem']), None)[
@@ -820,13 +864,15 @@ class CodeGenVisitor(BaseVisitor):
                     typ = ele['decl'].mtype
                     code = self.emit.emitPUTSTATIC(o.sym['current']['name'].name + '.' + ast.name, ele['decl'].mtype, o.frame) if o.isLeft else self.emit.emitGETSTATIC(
                         o.sym['current']['name'].name + '.' + ast.name, ele['decl'].mtype, o.frame)
+                    
                     return code, typ
                 else:
                     typ = ele['decl'].mtype
                     code = self.emit.emitREADVAR(
-                        ast.name, ClassType(o.sym['current']['name']), 0, o.frame) if not o.isLeft else ""
-                    code += self.emit.emitPUTFIELD(o.sym['current']['name'].name + '.' + ast.name, typ, o.frame) if o.isLeft else self.emit.emitGETFIELD(
+                        ast.name, ClassType(o.sym['current']['name']), 0, o.frame) if not o.isLeft or type(typ) is ArrayType else ""
+                    code += self.emit.emitPUTFIELD(o.sym['current']['name'].name + '.' + ast.name, typ, o.frame) if o.isLeft and not type(typ) is ArrayType else self.emit.emitGETFIELD(
                         o.sym['current']['name'].name + '.' + ast.name, typ, o.frame)
+
                     return code, typ
 
         return "", ""

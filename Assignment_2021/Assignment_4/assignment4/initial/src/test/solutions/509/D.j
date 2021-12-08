@@ -1,32 +1,19 @@
 .source D.java
 .class public D
 .super java.lang.Object
-.field z I
-.field static c I
-.field static bk2 LBKoolClass;
-.field z Z
-.field z1 Z
+.field a [I
 
-.method public foo2(II)I
+.method public foo(I)I
 .var 0 is this LD; from Label0 to Label1
-.var 1 is a I from Label0 to Label1
-.var 2 is b I from Label0 to Label1
+.var 1 is b I from Label0 to Label1
 Label0:
-	iconst_0
-	istore_1
-Label2:
 	iload_1
-	iconst_2
-	if_icmple Label3
-	iload_1
+	aload_0
+	getfield D.a [I
 	iconst_1
-	iadd
-	istore_1
-	goto Label2
-Label3:
 Label1:
-.limit stack 3
-.limit locals 3
+.limit stack 4
+.limit locals 2
 .end method
 
 .method public <init>()V
@@ -35,30 +22,26 @@ Label0:
 	aload_0
 	invokespecial java/lang/Object/<init>()V
 	aload_0
-	iconst_0
-	putfield D.z I
-	aload_0
-	iconst_1
-	putfield D.z I
-	aload_0
-	iconst_0
-	putfield D.z1 Z
-Label1:
-	return
-.limit stack 9
-.limit locals 1
-.end method
-
-.method public static <clinit>()V
-Label0:
-	iconst_1
-	putstatic D.c I
-	new BKoolClass
+	newarray int
 	dup
-	invokespecial BKoolClass()V
-	putstatic D.bk2 LBKoolClass;
+	iconst_0
+	iconst_0
+	iastore
+	dup
+	iconst_1
+	iconst_1
+	iastore
+	dup
+	iconst_2
+	iconst_2
+	iastore
+	dup
+	iconst_3
+	iconst_3
+	iastore
+	putfield D.a [I
 Label1:
 	return
-.limit stack 2
-.limit locals 0
+.limit stack 4
+.limit locals 1
 .end method

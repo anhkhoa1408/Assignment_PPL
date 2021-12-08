@@ -1,0 +1,16 @@
+
+            class BKoolClass{
+                static void main(){
+                    int a;
+                    boolean e;
+                    e := false;
+                    for a := 3 downto 1 do {
+                        if a == 2 then {
+                            e := 1 < 1;
+                            break;
+                        }
+                    }
+                    io.writeBool(e);
+                }
+            }
+        
